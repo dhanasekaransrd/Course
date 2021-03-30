@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="index.css">
+
+</head>
+<body onload="viewCourse()">
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav();">&times;</a>
+        <a href="/"><i class="fa fa-home">&nbsp;&nbsp;HOME</i></a>
+        <a href="#"><i class="fa fa-book">&nbsp;&nbsp;COURSES</i></a>
+        <a href="#"><i class="fa fa-graduation-cap">&nbsp;TRAINERS</i></a>
+        <a href="#"><i class="fa fa-users">&nbsp;&nbsp;STUDENTS</i></a>
+        <!-- <a href="#"><i class="fa fa-blinds">&nbsp;&nbsp;BATCHES</i></a> -->
+      </div>
+    
+
+    
+      <div class="navbar" id="main">
+               <span style="font-size:30px;cursor:pointer" onclick="openNav();">&#9776; </span>
+       </div>
+
+      <div class="container mb-3" id="button">
+             <button type="button" class="btn btn-primary btn-lg" onclick="createCourse();">CREATE COURSE</button>
+             <!-- <button type="button" class="btn btn-success btn-lg" onclick="viewCourse();">VIEW COURSE</button> -->
+      </div>
+      
+          <div class="container mb-3 " id="search-bar">
+              <input type="search" class="form-control ds-input" name="search-input" id="search-input" onchange="search_course();" placeholder="Search course..."/>
+          </div>
+      
+
+      <div class="container mb-3" id="tabledata">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">COURSES</th>
+              <th scope="col">MODULES</th>
+              <th scope="col">CATEGORY</th>
+              <th scope="col">SUBCATEGORY</th>
+              <th scope="col">STATUS</th>
+              <th scope="col">EDIT</th>
+              <th scope="col">DELETE</th>
+              
+            </tr>
+          </thead>
+          <tbody id="table_data">
+           
+          </tbody>
+        </table>
+      </div>
+    
+      
+
+   <div class ="popup">
+       <div class="popup-content" id="closebtn">
+        <div class="card">
+          <div class="card-header">
+           <h3> Create course</h3>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+              <div class="container">
+                <div class="row">    
+            <h5 class="card-title">Course creation</h5>
+            <p class="card-text">Fill in the details of you course and click on sumbit</p>  
+          </div>
+        </div>
+        </div>
+            
+              <div class="col-md-8">
+                  <div class="row">
+                  <div class="col-md-6">
+                        <label><b>Course name</b></label>
+                        <input type="text"  required placeholder="course name " name="course_name" class="form-control" id="course_name" />
+                        <p hidden id="hide" style="color:red;"> Fill the course</p>
+                        <br>
+                    </div>
+                       <div class="col-md-6">
+                        <label><b>Modules</b></label>
+                        <input type="text" class="form-control" name="modules" placeholder="modules " id="modules" required/>
+                        <br>
+                        </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                          <label><b>Category</b></label>
+                          <select id="category" name="category" class="form-control" required >
+                            <option value=""></option>
+                            <option>Programming</option>
+                            <option>Science</option>
+                            <option>Social science</option>
+                            <option>Mathematics</option>
+                            </select>
+                          <br>
+                      </div>
+                         <div class="col-md-6">
+                          <label><b>Sub category</b></label>
+                          <select id="sub_category" name="sub_category" class="form-control">
+                            
+                            <option>C Programming</option>
+                            <option>Java Programming</option>
+                            <option>Chemistry</option>
+                            <option>Physics</option>
+                            <option>History</option>
+                          </select>
+                          <br>
+                          </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                            <label><b>Status</b></label>
+                            <select id="status" name="status" class="form-control">
+                              
+                              <option>Draft</option>
+                              <option>Unblished</option>
+                              </select>
+                            <br>
+                        </div>
+                        </div>
+
+                </div>
+            </div>
+      </div>
+        
+
+          <div class="card-footer text-muted">
+            <button type="button" style="margin-left: 85%;" class="btn btn-danger" onclick="cancelCourse();">cancel</button>
+            <button type="button" class="btn btn-success" onclick="submit_form();">submit</button>
+          </div>
+
+        </div>        
+      </div>
+    </div>
+
+        <div class="modal" id="popup_delete" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="close">
+          <div class="modal-header">
+            <h5 class="modal-title">Course deletion</h5>
+          </div>
+
+          <div class="modal-body">
+            <p>This will delete your course detail if you want to delete continue to click on.</p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_delete">Close</button>
+            <button type="button" class="btn btn-success"  onclick="deleteCourse(sessionStorage.getItem('delete_id'))">OK</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class ="popup" id="update_popup">
+      <div class="popup-content" id="closebtn1">
+       <div class="card">
+         <div class="card-header">
+          <h3> Update course</h3>
+         </div>
+
+         <div class="card-body">
+           <div class="row">
+             <div class="col-md-4">
+             <div class="container">
+               <div class="row">    
+           <h5 class="card-title">Update course</h5>
+           <p class="card-text">Edit in the details of your course and click on ave changes</p>  
+         </div>
+       </div>
+       </div>
+           
+             <div class="col-md-8">
+                 <div class="row">
+                 <div class="col-md-6">
+                       <label><b>Course name</b></label>
+                       <input type="text"  name="course_name1" class="form-control" id="course_name1" />
+                       <br>
+                   </div>
+                      <div class="col-md-6">
+                       <label><b>Modules</b></label>
+                       <input type="text" class="form-control" name="modules1"  id="modules1" />
+                       <br>
+                       </div>
+                 </div>
+                 <div class="row">
+                   <div class="col-md-6">
+                         <label><b>Category</b></label>
+                         <input type="text" id="category1" name="category1" class="form-control">
+                            <br>
+                     </div>
+                        <div class="col-md-6">
+                         <label><b>Sub category</b></label>
+                         <input type="text" id="sub_category1" name="sub_category1" class="form-control">
+                        
+                         <br>
+                         </div>
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                           <label><b>Status</b></label>
+                           <input type="text" id="status1" name="status1" class="form-control">
+                             
+                             
+                           <br>
+                       </div>
+                       </div>
+
+               </div>
+           </div>
+     </div>
+       
+
+         <div class="card-footer text-muted" >
+           <button type="button"  class="btn btn-danger"style="margin-left: 79%;" id="cancel_update">cancel</button>
+           <button type="button" class="btn btn-success" onclick="submit_update(sessionStorage.getItem('update_id'))">save changes</button>
+         </div>
+
+       </div>        
+     </div>
+   </div>
+
+  
+  
+
+  <script type="text/javascript" src = "js/index.js"></script>
+ <script src = "js/jquery.js"></script>
+     
+</body>
+</html> 
